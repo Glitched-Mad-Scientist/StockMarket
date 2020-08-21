@@ -8,12 +8,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockMarket.AccountAPI.Models
 {
-   [Table("User")]
+    [Table("User")]
     public class User
     {
         [Key]
-        [StringLength(30)]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         [Required]
         [StringLength(30)]
         public string Username { get; set; }

@@ -11,11 +11,11 @@ namespace StockMarket.AccountAPI.Models
     [Table("StockPrice")]
     public class StockPrice
     {
-       [Key]
+        [Key]
         public int RowId { get; set; }
         [ForeignKey("Company")]
-        [StringLength(30)]
-        public string CompanyCode { get; set; }
+        [Required]
+        public int CompanyCode { get; set; }
         [Required]
         [StringLength(30)]
         public string StockExchange { get; set; }
