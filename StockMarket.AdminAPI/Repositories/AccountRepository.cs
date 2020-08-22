@@ -7,7 +7,7 @@ using StockMarket.AdminAPI.DBAccess;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using StockMarket.AdminAPI.Models;
 
-namespace StockMarket.AccountAPI.Repositories
+namespace StockMarket.AdminAPI.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
@@ -16,23 +16,26 @@ namespace StockMarket.AccountAPI.Repositories
         {
             this.context = context;
         }
-        public void AddCompany(User item)
+        public void AddCompany(Company item)
         {
             context.Add(item);
             context.SaveChanges();
         }
-        public Company CreateCompany(string uname,string password,string email=null,string mobile=null,string confirmed= null)
+        public Company CreateCompany(string sector, string cname, long turnover=0,string ceo=null,string bod=null,string se=null,string sc= null, string desc = null)
         {
-            User user = new User();
-            user.Username = uname;
-            user.Password = password;
-            user.Email = email;
-            user.Mobile = mobile;
-            user.Confirmed = confirmed;
-            return user;
+            Company company = new Company();
+            company.CompanyName = cname;
+            company.CEO = ceo;
+            company.BoardofDirectors = bod;
+            company.StockExchanges = se;
+            company.StockCodes = sc;
+            company.Turnover = turnover;
+            company.Sector = sector;
+            company.Description = desc;
+            return company;
         }
 
-        public void UpdateUser(int? UId, string uname=null, string password=null, string email = null, string mobile = null, string confirmed = null)
+        public void UpdateCompany(int? UId, string uname=null, string password=null, string email = null, string mobile = null, string confirmed = null)
         {
             User user = context.Users.Find(UId);
             if(uname != null)
@@ -48,10 +51,17 @@ namespace StockMarket.AccountAPI.Repositories
             context.Update(user);
         }
 
-        public User Validate(string uname, string pwd)
+        public Company ValidateName(string cname)
         {
-            User user = context.Users.SingleOrDefault(i => i.Username == uname && i.Password == pwd);
-            return user;
+            Company company = context.Companies.SingleOrDefault(i => i.CompanyName == cname);
+            return company;
         }
+
+        public Company ValidateCid(int cid)
+        {
+            Company company = context.Companies.SingleOrDefault(i => i.CompanyCode == cid);
+            return company;
+        }
+
     }
 }

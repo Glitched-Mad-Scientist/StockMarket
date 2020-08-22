@@ -8,17 +8,17 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using OfficeOpenXml;
 using System.Text;
-
+using StockMarket.ExcelAPI.DBAccess;
 using StockMarket.ExcelAPI.Models;
 
-namespace EPPlusCore.Controllers
+namespace StockMarket.ExcelAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Stock")]
     public class StockController : Controller
     {
         //private readonly IHostingEnvironment _hostingEnvironment;
-        StockMarketDBContext _db = new StockMarketDBContext();
+        StockDBContext _db = new StockDBContext();
 
         //public StockController(IHostingEnvironment hostingEnvironment, StockMarketDBContext db)
         //{
@@ -31,7 +31,7 @@ namespace EPPlusCore.Controllers
         [Route("ImportStock/{*filePath}")]
         public void ImportStock(string filename)
         {
-            string filePath = @"D:\IIHT\Client-1\Batch2\PHASE3\Upload\" + filename;
+            string filePath = @"C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\Upload\" + filename;
 
             //  string rootFolder = _hostingEnvironment.WebRootPath;
             // string fileName = @"ImportCustomers.xlsx";
@@ -50,7 +50,7 @@ namespace EPPlusCore.Controllers
                 {
                     stockPrices.Add(new StockPrice
                     {
-                        CompanyCode = workSheet.Cells[i, 1].Value.ToString().Trim(),
+                        CompanyCode = int.Parse(workSheet.Cells[i, 1].Value.ToString().Trim()),
                         StockExchange = workSheet.Cells[i, 2].Value.ToString().Trim(),
                         CurrentPrice = double.Parse(workSheet.Cells[i, 3].Value.ToString().Trim()),
                         Date = DateTime.Parse(workSheet.Cells[i, 4].Value.ToString().Trim()),
@@ -58,8 +58,9 @@ namespace EPPlusCore.Controllers
                     });
                 }
 
-                _db.StockPrice.AddRange(stockPrices);
+                _db.StockPrices.AddRange(stockPrices);
                 _db.SaveChanges();
             }
         }
+    }
 }
