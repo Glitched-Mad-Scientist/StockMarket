@@ -5,14 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using StockMarket.AdminAPI.DBAccess;
 using Microsoft.AspNetCore.Server.IIS.Core;
-using StockMarket.AdminAPI.Models;
+using StockMarket.AccountAPI.Repositories;
 
 namespace StockMarket.AdminAPI.Repositories
 {
-    public class AccountRepository : IAccountRepository
+    public class AdminRepository : IAdminRepository
     {
         private StockDBContext context;
-        public AccountRepository(StockDBContext context)
+        public AdminRepository(StockDBContext context)
         {
             this.context = context;
         }
@@ -35,20 +35,31 @@ namespace StockMarket.AdminAPI.Repositories
             return company;
         }
 
-        public void UpdateCompany(int? UId, string uname=null, string password=null, string email = null, string mobile = null, string confirmed = null)
+        public void UpdateCompany(int CId, string sector = null, string cname = null, long turnover = 0, string ceo = null, string bod = null, string se = null, string sc = null, string desc = null)
         {
-            User user = context.Users.Find(UId);
-            if(uname != null)
-                user.Username = uname;
-            if (password != null)
-                user.Password = password;
-            if (email != null)
-                user.Email = email;
-            if (mobile != null)
-                user.Mobile = mobile;
-            if (confirmed != null)
-                user.Confirmed = confirmed;
-            context.Update(user);
+            Company company = context.Companies.Find(CId);
+            if (cname != null)
+                company.CompanyName = cname;
+            if (ceo != null)
+                company.CEO = ceo;
+            if (bod != null)
+                company.BoardofDirectors = bod;
+            if (se != null)
+                company.StockExchanges = se;
+            if (sc != null)
+                company.StockCodes = sc;
+            if (turnover != 0)
+                company.Turnover = turnover;
+            if (sector != null)
+                company.Sector = sector;
+            if (desc != null)
+                company.Description = desc;
+            context.Update(company);
+        }
+
+        public void DeleteCompany(Company item)
+        {
+            context.Companies.Remove(item);
         }
 
         public Company ValidateName(string cname)

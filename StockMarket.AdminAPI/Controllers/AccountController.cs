@@ -4,34 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StockMarket.AccountAPI.Models;
-using StockMarket.AccountAPI.Services;
-namespace StockMarket.AccountAPI.Controllers
+using StockMarket.AdminAPI.Models;
+using StockMarket.AdminAPI.Services;
+namespace StockMarket.AdminAPI.Controllers
 {
 
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private IAccountService service;
-        public AccountController(IAccountService service)
+        private IAdminService service;
+        public AccountController(IAdminService service)
         {
             this.service = service;
         }
         [HttpGet]
-        [Route("Validate/{uname}/{pwd}")]
-        public IActionResult Validate(string uname,string pwd)
+        [Route("Validate/{cname}")]
+        public IActionResult Validate(string cname)
         {
             try
             {
-                User user = service.Validate(uname, pwd);
-                if(user==null)
+                Company company = service.ValidateName(cname);
+                if(company==null)
                 {
                     return Content("Invalid User");
                 }
                 else
                 {
-                    return Ok(user);
+                    return Ok(company);
                 }
             }
             catch (Exception ex)
@@ -40,13 +40,13 @@ namespace StockMarket.AccountAPI.Controllers
             }
         }
         [HttpPost]
-        [Route("AddUser")]
-        public IActionResult AddUser(string uname, string password, string email, string mobile, string confirmed)
+        [Route("AddCompany")]
+        public IActionResult AddCompany(string sector, string cname, long turnover, string ceo, string bod, string se, string sc, string desc)
         {
             try
             {
-                User item = service.CreateUser(uname,password,email,mobile,confirmed);
-                service.AddUser(item);
+                Company item = service.CreateCompany(sector, cname, turnover, ceo, bod, se, sc, desc);
+                service.AddCompany(item);
                 return Ok();
             }
             catch(Exception ex)
@@ -55,12 +55,27 @@ namespace StockMarket.AccountAPI.Controllers
             }
         }
         [HttpPost]
-        [Route("UpdateUser")]
-        public IActionResult UpdateUser(string uname, string password, string email, string mobile, string confirmed,User user)
+        [Route("UpdateCompany")]
+        public IActionResult UpdateCompany(int CId, string sector, string cname, long turnover, string ceo, string bod, string se, string sc, string desc)
         {
             try
             {
-                service.UpdateUser(user.UserId, uname, password, email, mobile, confirmed);
+                service.UpdateCompany(CId, sector, cname, turnover, ceo, bod, se, sc, desc);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("DeleteCompany")]
+        public IActionResult DeactivateCompany(int CId)
+        {
+            try
+            {
+                Company item = service.ValidateCid(CId);
+                service.DeleteCompany(item);
                 return Ok();
             }
             catch (Exception ex)
