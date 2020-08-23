@@ -15,5 +15,10 @@ namespace StockMarket.UserAPI.Services
         }
 
         public Company SearchCompany(string name) => userRepository.SearchCompany(name);
+
+        public IEnumerable<StockPrice> SearchStocksofCompany(Company company)
+        {
+            return userRepository.SearchStocksofCompany(company);
+        }
     }
 }

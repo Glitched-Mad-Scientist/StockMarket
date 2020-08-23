@@ -9,5 +9,6 @@ namespace StockMarket.UserAPI.Repositories
     public interface IUserRepository
     {
         public Company SearchCompany(string name);
+        public IEnumerable<StockPrice> SearchStocksofCompany(Company company);
     }
 }

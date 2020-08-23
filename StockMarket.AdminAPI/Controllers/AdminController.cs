@@ -11,10 +11,10 @@ namespace StockMarket.AdminAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AdminController : ControllerBase
     {
         private IAdminService service;
-        public AccountController(IAdminService service)
+        public AdminController(IAdminService service)
         {
             this.service = service;
         }
