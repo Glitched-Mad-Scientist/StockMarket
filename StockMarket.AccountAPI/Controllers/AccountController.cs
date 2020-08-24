@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockMarket.AccountAPI.Models;
@@ -29,10 +32,11 @@ namespace StockMarket.AccountAPI.Controllers
                 {
                     return Content("Invalid User");
                 }
-                else
+                if(user.Confirmed == "No")
                 {
-                    return Ok(user);
+                    return Content("Email has not been confirmed yet.");
                 }
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -45,7 +49,7 @@ namespace StockMarket.AccountAPI.Controllers
         {
             try
             {
-                User item = service.CreateUser(uname,password,email,mobile,confirmed);
+                User item = service.CreateUser(uname,password,email,mobile);
                 service.AddUser(item);
                 return Ok();
             }
@@ -56,11 +60,11 @@ namespace StockMarket.AccountAPI.Controllers
         }
         [HttpPost]
         [Route("UpdateUser")]
-        public IActionResult UpdateUser(string uname, string password, string email, string mobile, string confirmed,User user)
+        public IActionResult UpdateUser(string uname, string password, string email, string mobile, User user)
         {
             try
             {
-                service.UpdateUser(user.UserId, uname, password, email, mobile, confirmed);
+                service.UpdateUser(user.UserId, uname, password, email, mobile);
                 return Ok();
             }
             catch (Exception ex)
@@ -68,5 +72,54 @@ namespace StockMarket.AccountAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPost]
+        [Route("ConfirmationEmail")]
+        public IActionResult CofirmationEmail(User user)
+        {
+            try
+            {
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", user, protocol: HttpContext.Request.Scheme);
+                String url = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
+
+                MailMessage msg = new MailMessage();
+                msg.From = new MailAddress("teertharajchatterjee@gmail.com");
+                msg.To.Add(user.Email);
+                msg.Subject = "This is your confirmation email";
+                msg.Body = url;
+                msg.IsBodyHtml = true;
+
+                SmtpClient smt = new SmtpClient();
+                smt.Host = "smtp.gmail.com";
+                System.Net.NetworkCredential ntwd = new NetworkCredential();
+                ntwd.UserName = "teertharajchatterjee@gmail.com";
+                ntwd.Password = "MadScientist#125009";
+                smt.UseDefaultCredentials = true;
+                smt.Credentials = ntwd;
+                smt.Port = 587;
+                smt.EnableSsl = true;
+                smt.Send(msg);
+                return Ok("Confirmation email has been sent.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("ConfirmEmail")]
+        public IActionResult CofirmEmail(User user)
+        {
+            try
+            {
+                user.Confirmed = "Yes";
+                return Ok("Email Confirmed.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
