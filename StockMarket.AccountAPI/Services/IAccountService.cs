@@ -9,8 +9,8 @@ namespace StockMarket.AccountAPI.Services
    public interface IAccountService
     {
         void AddUser(User item);
-        public User CreateUser(string uname, string password, string email, string mobile, string confirmed);
+        public User CreateUser(string uname, string password, string email, string mobile);
         User Validate(string uname, string pwd);
-        public void UpdateUser(int userId, string uname, string password, string email, string mobile, string confirmed);
+        public void UpdateUser(int userId, string uname, string password, string email, string mobile);
     }
 }

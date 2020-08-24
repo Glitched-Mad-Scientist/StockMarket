@@ -22,7 +22,7 @@ namespace StockMarket.AccountAPI.Repositories
             context.Add(item);
             context.SaveChanges();
         }
-        public User CreateUser(string uname,string password,string email=null,string mobile=null,string confirmed= null)
+        public User CreateUser(string uname,string password,string email=null,string mobile=null)
         {
             User user = new User();
             user.Username = uname;
@@ -30,11 +30,11 @@ namespace StockMarket.AccountAPI.Repositories
             user.Password = hashed;
             user.Email = email;
             user.Mobile = mobile;
-            user.Confirmed = confirmed;
+            user.Confirmed = "No";
             return user;
         }
 
-        public void UpdateUser(int UId, string uname=null, string password=null, string email = null, string mobile = null, string confirmed = null)
+        public void UpdateUser(int UId, string uname=null, string password=null, string email = null, string mobile = null)
         {
             User user = context.Users.Find(UId);
             if(uname != null)
@@ -42,11 +42,12 @@ namespace StockMarket.AccountAPI.Repositories
             if (password != null)
                 user.Password = enc.Encrypt(password);
             if (email != null)
+            {
                 user.Email = email;
+                user.Confirmed = "No";
+            }
             if (mobile != null)
                 user.Mobile = mobile;
-            if (confirmed != null)
-                user.Confirmed = confirmed;
             context.Update(user);
             context.SaveChanges();
         }
