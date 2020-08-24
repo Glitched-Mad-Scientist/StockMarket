@@ -30,5 +30,9 @@ namespace StockMarket.AccountAPI.Services
         {
             accountRepository.UpdateUser(UId,uname,password,email,mobile);        
         }
+        public void ConfirmEmail(User user)
+        {
+            accountRepository.ConfirmEmail(user);
+        }
     }
 }

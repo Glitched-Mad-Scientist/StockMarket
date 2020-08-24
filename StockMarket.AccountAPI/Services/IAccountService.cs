@@ -12,5 +12,6 @@ namespace StockMarket.AccountAPI.Services
         public User CreateUser(string uname, string password, string email, string mobile);
         User Validate(string uname, string pwd);
         public void UpdateUser(int userId, string uname, string password, string email, string mobile);
+        public void ConfirmEmail(User user);
     }
 }

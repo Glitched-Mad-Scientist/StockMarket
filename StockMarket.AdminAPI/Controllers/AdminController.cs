@@ -54,7 +54,7 @@ namespace StockMarket.AdminAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateCompany")]
         public IActionResult UpdateCompany(int CId, string sector, string cname, long turnover, string ceo, string bod, string se, string sc, string desc)
         {
@@ -68,7 +68,7 @@ namespace StockMarket.AdminAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteCompany")]
         public IActionResult DeactivateCompany(int CId)
         {

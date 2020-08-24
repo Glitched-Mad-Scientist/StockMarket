@@ -57,5 +57,12 @@ namespace StockMarket.AccountAPI.Repositories
             User user = context.Users.SingleOrDefault(i => i.Username == uname && i.Password == enc.Encrypt(pwd));
             return user;
         }
+
+        public void ConfirmEmail(User user)
+        {
+            user.Confirmed = "Yes";
+            context.Update(user);
+            context.SaveChanges();
+        }
     }
 }

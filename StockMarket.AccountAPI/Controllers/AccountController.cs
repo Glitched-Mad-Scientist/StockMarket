@@ -58,13 +58,15 @@ namespace StockMarket.AccountAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateUser")]
         public IActionResult UpdateUser(string uname, string password, string email, string mobile, User user)
         {
             try
             {
                 service.UpdateUser(user.UserId, uname, password, email, mobile);
+                //if(email != null)
+                    
                 return Ok();
             }
             catch (Exception ex)
@@ -72,7 +74,7 @@ namespace StockMarket.AccountAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost]
+        [HttpGet]
         [Route("ConfirmationEmail")]
         public IActionResult CofirmationEmail(User user)
         {
@@ -92,7 +94,7 @@ namespace StockMarket.AccountAPI.Controllers
                 smt.Host = "smtp.gmail.com";
                 System.Net.NetworkCredential ntwd = new NetworkCredential();
                 ntwd.UserName = "teertharajchatterjee@gmail.com";
-                ntwd.Password = "MadScientist#125009";
+                ntwd.Password = "";
                 smt.UseDefaultCredentials = true;
                 smt.Credentials = ntwd;
                 smt.Port = 587;
@@ -106,13 +108,13 @@ namespace StockMarket.AccountAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("ConfirmEmail")]
         public IActionResult CofirmEmail(User user)
         {
             try
             {
-                user.Confirmed = "Yes";
+                service.ConfirmEmail(user);
                 return Ok("Email Confirmed.");
             }
             catch (Exception ex)
