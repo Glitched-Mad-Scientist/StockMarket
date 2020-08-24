@@ -12,7 +12,7 @@ namespace StockMarket.AccountAPI.Repositories
     public class AccountRepository : IAccountRepository
     {
         private StockDBContext context;
-        private encryption enc;
+        private encryption enc = new encryption();
         public AccountRepository(StockDBContext context)
         {
             this.context = context;

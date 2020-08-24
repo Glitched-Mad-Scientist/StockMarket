@@ -14,7 +14,7 @@ using StockMarket.ExcelAPI.Models;
 namespace StockMarket.ExcelAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Stock")]
+    [Route("api/Excel")]
     public class StockController : Controller
     {
         //private readonly IHostingEnvironment _hostingEnvironment;

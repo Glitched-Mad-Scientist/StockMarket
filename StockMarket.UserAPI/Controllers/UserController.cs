@@ -9,7 +9,7 @@ using StockMarket.UserAPI.Services;
 namespace StockMarket.UserAPI.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace StockMarket.UserAPI.Controllers
                 Company company = service.SearchCompany(name);
                 if(company==null)
                 {
-                    return Content("Invalid User");
+                    return Content("Invalid Company");
                 }
                 else
                 {

@@ -9,7 +9,7 @@ using StockMarket.AdminAPI.Services;
 namespace StockMarket.AdminAPI.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/Admin")]
     [ApiController]
     public class AdminController : ControllerBase
     {

@@ -21,9 +21,14 @@ namespace StockMarket.AccountAPI.Migrations
 
             modelBuilder.Entity("StockMarket.AccountAPI.Models.Company", b =>
                 {
-                    b.Property<string>("CompanyCode")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                    b.Property<int>("CompanyCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BoardofDirectors")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("CEO")
                         .HasColumnType("nvarchar(30)")
@@ -34,9 +39,69 @@ namespace StockMarket.AccountAPI.Migrations
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Sector")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("StockCodes")
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("StockExchanges")
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<long>("Turnover")
+                        .HasColumnType("bigint");
+
                     b.HasKey("CompanyCode");
 
                     b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("StockMarket.AccountAPI.Models.IPO", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<DateTime>("OpenDate")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("PricePerShare")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("StockExchange")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("TotalNumberOfShares")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyCode");
+
+                    b.ToTable("IPO");
                 });
 
             modelBuilder.Entity("StockMarket.AccountAPI.Models.StockPrice", b =>
@@ -46,9 +111,8 @@ namespace StockMarket.AccountAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CompanyCode")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                    b.Property<int>("CompanyCode")
+                        .HasColumnType("int");
 
                     b.Property<double>("CurrentPrice")
                         .HasColumnType("float");
@@ -73,9 +137,10 @@ namespace StockMarket.AccountAPI.Migrations
 
             modelBuilder.Entity("StockMarket.AccountAPI.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Confirmed")
                         .HasColumnType("nvarchar(30)")
@@ -104,11 +169,22 @@ namespace StockMarket.AccountAPI.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("StockMarket.AccountAPI.Models.IPO", b =>
+                {
+                    b.HasOne("StockMarket.AccountAPI.Models.Company", "Company")
+                        .WithMany("IPOs")
+                        .HasForeignKey("CompanyCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("StockMarket.AccountAPI.Models.StockPrice", b =>
                 {
                     b.HasOne("StockMarket.AccountAPI.Models.Company", "Company")
                         .WithMany("StockPrices")
-                        .HasForeignKey("CompanyCode");
+                        .HasForeignKey("CompanyCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
