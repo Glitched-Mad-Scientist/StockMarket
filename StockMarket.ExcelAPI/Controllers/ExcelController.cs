@@ -62,5 +62,41 @@ namespace StockMarket.ExcelAPI.Controllers
                 _db.SaveChanges();
             }
         }
+        public void ExportData()
+        {
+            string filepath = @"E:/upload/ExportStockPrices.xlsx";
+
+            FileInfo file = new FileInfo(filepath);
+
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+
+                List<StockPrice> stock = _db.StockPrices.ToList();
+
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("StockPrice");
+                int totalRows = stock.Count();
+
+                worksheet.Cells[1, 1].Value = "RowId";
+                worksheet.Cells[1, 2].Value = "CompanyCode";
+                worksheet.Cells[1, 3].Value = "StockExchange";
+                worksheet.Cells[1, 4].Value = "CurrentPrice";
+                worksheet.Cells[1, 5].Value = "Date";
+                worksheet.Cells[1, 6].Value = "Time";
+                int i = 0;
+                for (int row = 2; row <= totalRows + 1; row++)
+                {
+                    worksheet.Cells[row, 1].Value = stock[i].RowId;
+                    worksheet.Cells[row, 2].Value = stock[i].CompanyCode;
+                    worksheet.Cells[row, 3].Value = stock[i].StockExchange;
+                    worksheet.Cells[row, 4].Value = stock[i].CurrentPrice;
+                    worksheet.Cells[row, 5].Value = stock[i].Date;
+                    worksheet.Cells[row, 6].Value = stock[i].Time;
+                    i++;
+                }
+
+                package.Save();
+
+            }
+        }
     }
 }

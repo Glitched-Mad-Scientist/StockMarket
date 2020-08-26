@@ -65,8 +65,8 @@ namespace StockMarket.AccountAPI.Controllers
             try
             {
                 service.UpdateUser(user.UserId, uname, password, email, mobile);
-                //if(email != null)
-                    
+                if (email != null)
+                    service.ConfirmEmail(user);
                 return Ok();
             }
             catch (Exception ex)
