@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using StockMarket.AccountAPI.Models;
 using StockMarket.AccountAPI.Services;
+
 namespace StockMarket.AccountAPI.Controllers
 {
 
@@ -17,9 +20,11 @@ namespace StockMarket.AccountAPI.Controllers
     public class AccountController : ControllerBase
     {
         private IAccountService service;
-        public AccountController(IAccountService service)
+        private readonly IConfiguration configuration;
+        public AccountController(IAccountService service,IConfiguration configuration)
         {
             this.service = service;
+            this.configuration = configuration;
         }
         [HttpGet]
         [Route("Validate/{uname}/{pwd}")]
@@ -36,7 +41,7 @@ namespace StockMarket.AccountAPI.Controllers
                 {
                     return Content("Email has not been confirmed yet.");
                 }
-                return Ok(user);
+                return Ok(GenerateJwtToken(uname));
             }
             catch (Exception ex)
             {
@@ -121,6 +126,30 @@ namespace StockMarket.AccountAPI.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        private string GenerateJwtToken(string uname)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, uname),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, uname),
+                new Claim(ClaimTypes.Role,uname)
+            };
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(configuration["JwtExpireDays"]));
+            var token = new JwtSecurityToken(
+                issuer: configuration["JWT:ValidIssuer"],
+                audience: configuration["JWT:ValidAudience"],
+                claims,
+                expires: expires,
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
 
     }

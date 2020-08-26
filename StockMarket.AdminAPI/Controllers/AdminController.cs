@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockMarket.AdminAPI.Models;
@@ -11,6 +12,7 @@ namespace StockMarket.AdminAPI.Controllers
 
     [Route("api/Admin")]
     [ApiController]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private IAdminService service;

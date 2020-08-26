@@ -10,11 +10,13 @@ using OfficeOpenXml;
 using System.Text;
 using StockMarket.ExcelAPI.DBAccess;
 using StockMarket.ExcelAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StockMarket.ExcelAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Excel")]
+    [Authorize]
     public class StockController : Controller
     {
         //private readonly IHostingEnvironment _hostingEnvironment;

@@ -102,6 +102,3 @@ C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.GateWay\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.GateWay\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.GateWay\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.GateWay\obj\Debug\netcoreapp3.1\StockMarket.GateWay.csproj.CoreCompileInputs.cache
-C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.GateWay\obj\Debug\netcoreapp3.1\StockMarket.GateWay.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.GateWay\obj\Debug\netcoreapp3.1\StockMarket.GateWay.MvcApplicationPartsAssemblyInfo.cache

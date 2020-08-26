@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "xlx3wSmT9/qRDqYy0/KI4i6dlP0y8pYcEE00S7QtHXkqDcyHg4jgKv4fxYYW2/pNMZDJ0xaEpU760JHDShEZBA==",
+  "dgSpecHash": "hJSphifc3r9mze0zBYUvs/RFVgEG3kp+J6tEar08wuwNQIZvKW90NgQeZ/Mp5woYNmi4BPnoUoIJqjXcE/LdrQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Teertho\\Downloads\\Batch2_Phase3-master\\Batch2_Phase3-master\\StockMarket\\StockMarket.UserAPI\\StockMarket.UserAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.7\\microsoft.aspnetcore.authentication.jwtbearer.3.1.7.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

@@ -131,8 +131,6 @@ C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.csprojAssemblyReference.cache
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.AssemblyInfoInputs.cache
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.AssemblyInfo.cs
-C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.csproj.CoreCompileInputs.cache
-C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.RazorTargetAssemblyInfo.cache
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.csproj.CopyComplete
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\staticwebassets\StockMarket.AdminAPI.StaticWebAssets.Manifest.cache

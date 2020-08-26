@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "BlQwx05XRa1hetmthdYxs3NM2avoNxu0sJDNn22pLGRNrrd/1KAdrbEZk/XcZTdmIqvT80eHLJgFTdaTpg11HQ==",
+  "dgSpecHash": "TF2jnfoHxe732eRt5/irWJlk9qBJBGvQHhUVIHrynHHjFuqFoBHLYmII4n4bNpe2Gia5vlFFvuletz0zsMq5dQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Teertho\\Downloads\\Batch2_Phase3-master\\Batch2_Phase3-master\\StockMarket\\StockMarket.GateWay\\StockMarket.GateWay.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Teertho\\.nuget\\packages\\epplus.core\\1.5.4\\epplus.core.1.5.4.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\fluentvalidation\\8.6.2\\fluentvalidation.8.6.2.nupkg.sha512",
+    "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.7\\microsoft.aspnetcore.authentication.jwtbearer.3.1.7.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.3\\microsoft.aspnetcore.jsonpatch.3.1.3.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.aspnetcore.middlewareanalysis\\3.1.3\\microsoft.aspnetcore.middlewareanalysis.3.1.3.nupkg.sha512",
     "C:\\Users\\Teertho\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.3\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.3.nupkg.sha512",
