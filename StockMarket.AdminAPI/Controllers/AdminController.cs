@@ -12,7 +12,7 @@ namespace StockMarket.AdminAPI.Controllers
 
     [Route("api/Admin")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
         private IAdminService service;
