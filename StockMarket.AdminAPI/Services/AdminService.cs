@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using StockMarket.AdminAPI.Repositories;
 using StockMarket.AdminAPI.Models;
-using StockMarket.AccountAPI.Repositories;
 
 namespace StockMarket.AdminAPI.Services
 {

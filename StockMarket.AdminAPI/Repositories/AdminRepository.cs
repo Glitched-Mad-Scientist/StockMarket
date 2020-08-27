@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using StockMarket.AdminAPI.DBAccess;
 using Microsoft.AspNetCore.Server.IIS.Core;
-using StockMarket.AccountAPI.Repositories;
 
 namespace StockMarket.AdminAPI.Repositories
 {

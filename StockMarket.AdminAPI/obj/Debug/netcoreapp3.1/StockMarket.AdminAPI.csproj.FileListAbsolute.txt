@@ -138,3 +138,6 @@ C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.dll
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.pdb
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.genruntimeconfig.cache
+C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.csproj.CoreCompileInputs.cache
+C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\obj\Debug\netcoreapp3.1\StockMarket.AdminAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.AdminAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

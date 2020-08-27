@@ -136,3 +136,6 @@ C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.UserAPI\obj\Debug\netcoreapp3.1\StockMarket.UserAPI.dll
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.UserAPI\obj\Debug\netcoreapp3.1\StockMarket.UserAPI.pdb
 C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.UserAPI\obj\Debug\netcoreapp3.1\StockMarket.UserAPI.genruntimeconfig.cache
+C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.UserAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.UserAPI\obj\Debug\netcoreapp3.1\StockMarket.UserAPI.csproj.CoreCompileInputs.cache
+C:\Users\Teertho\Downloads\Batch2_Phase3-master\Batch2_Phase3-master\StockMarket\StockMarket.UserAPI\obj\Debug\netcoreapp3.1\StockMarket.UserAPI.MvcApplicationPartsAssemblyInfo.cache

@@ -62,7 +62,7 @@ namespace StockMarket.AccountAPI.Controllers
             {
                 User item = service.CreateUser(user.Username,user.Password,user.Email,user.Mobile);
                 service.AddUser(item);
-                return Ok();
+                return Ok(user);
             }
             catch(Exception ex)
             {
@@ -71,13 +71,13 @@ namespace StockMarket.AccountAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateUser")]
-        public IActionResult UpdateUser(User update, User user)
+        public IActionResult UpdateUser(User update)
         {
             try
             {
-                service.UpdateUser(user.UserId, update.Username, update.Password, update.Email, update.Mobile);
+                service.UpdateUser(update.UserId, update.Username, update.Password, update.Email, update.Mobile);
                 if (update.Email != null)
-                    service.ConfirmEmail(user);
+                    service.ConfirmEmail(update);
                 return Ok();
             }
             catch (Exception ex)
