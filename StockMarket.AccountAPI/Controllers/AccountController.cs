@@ -56,11 +56,11 @@ namespace StockMarket.AccountAPI.Controllers
         [HttpPost]
         [Route("AddUser")]
         [AllowAnonymous]
-        public IActionResult AddUser(string uname, string password, string email, string mobile, string confirmed)
+        public IActionResult AddUser(User user)
         {
             try
             {
-                User item = service.CreateUser(uname,password,email,mobile);
+                User item = service.CreateUser(user.Username,user.Password,user.Email,user.Mobile);
                 service.AddUser(item);
                 return Ok();
             }
@@ -71,12 +71,12 @@ namespace StockMarket.AccountAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateUser")]
-        public IActionResult UpdateUser(string uname, string password, string email, string mobile, User user)
+        public IActionResult UpdateUser(User update, User user)
         {
             try
             {
-                service.UpdateUser(user.UserId, uname, password, email, mobile);
-                if (email != null)
+                service.UpdateUser(user.UserId, update.Username, update.Password, update.Email, update.Mobile);
+                if (update.Email != null)
                     service.ConfirmEmail(user);
                 return Ok();
             }

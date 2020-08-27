@@ -10,5 +10,6 @@ namespace StockMarket.UserAPI.Repositories
     {
         public Company SearchCompany(string name);
         public IEnumerable<StockPrice> SearchStocksofCompany(Company company);
+        public IEnumerable<StockPrice> ComparePricesOfCompanies(DateTime dateTime);
     }
 }

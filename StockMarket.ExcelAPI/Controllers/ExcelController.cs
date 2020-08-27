@@ -29,7 +29,7 @@ namespace StockMarket.ExcelAPI.Controllers
         //}
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("ImportStock/{*filePath}")]
         public void ImportStock(string filename)
         {
@@ -64,6 +64,8 @@ namespace StockMarket.ExcelAPI.Controllers
                 _db.SaveChanges();
             }
         }
+        [HttpGet]
+        [Route("ExportStock")]
         public void ExportData()
         {
             string filepath = @"E:/upload/ExportStockPrices.xlsx";

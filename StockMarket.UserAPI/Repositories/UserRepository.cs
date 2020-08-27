@@ -24,5 +24,9 @@ namespace StockMarket.UserAPI.Repositories
         {
             return company.StockPrices.ToList();
         }
+        public IEnumerable<StockPrice> ComparePricesOfCompanies(DateTime dateTime)
+        {
+            return context.StockPrices.Where(x => x.Date.Equals(dateTime)).ToList();
+        }
     }
 }

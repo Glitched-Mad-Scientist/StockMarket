@@ -43,11 +43,11 @@ namespace StockMarket.AdminAPI.Controllers
         }
         [HttpPost]
         [Route("AddCompany")]
-        public IActionResult AddCompany(string sector, string cname, long turnover, string ceo, string bod, string se, string sc, string desc)
+        public IActionResult AddCompany(Company company)
         {
             try
             {
-                Company item = service.CreateCompany(sector, cname, turnover, ceo, bod, se, sc, desc);
+                Company item = service.CreateCompany(company.Sector, company.CompanyName, company.Turnover, company.CEO, company.BoardofDirectors, company.StockExchanges, company.StockCodes, company.Description);
                 service.AddCompany(item);
                 return Ok();
             }
@@ -58,11 +58,11 @@ namespace StockMarket.AdminAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateCompany")]
-        public IActionResult UpdateCompany(int CId, string sector, string cname, long turnover, string ceo, string bod, string se, string sc, string desc)
+        public IActionResult UpdateCompany(Company company, Company update)
         {
             try
             {
-                service.UpdateCompany(CId, sector, cname, turnover, ceo, bod, se, sc, desc);
+                service.UpdateCompany(company.CompanyCode, update.Sector, update.CompanyName, update.Turnover, update.CEO, update.BoardofDirectors, update.StockExchanges, update.StockCodes, update.Description);
                 return Ok();
             }
             catch (Exception ex)
@@ -72,11 +72,11 @@ namespace StockMarket.AdminAPI.Controllers
         }
         [HttpDelete]
         [Route("DeleteCompany")]
-        public IActionResult DeactivateCompany(int CId)
+        public IActionResult DeactivateCompany(Company company)
         {
             try
             {
-                Company item = service.ValidateCid(CId);
+                Company item = service.ValidateCid(company.CompanyCode);
                 service.DeleteCompany(item);
                 return Ok();
             }

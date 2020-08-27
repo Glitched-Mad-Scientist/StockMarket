@@ -21,7 +21,7 @@ namespace StockMarket.UserAPI.Controllers
             this.service = service;
         }
         [HttpGet]
-        [Route("SearchCompany")]
+        [Route("SearchCompany/{name}")]
         public IActionResult SearchCompany(string name)
         {
             try
@@ -34,6 +34,25 @@ namespace StockMarket.UserAPI.Controllers
                 else
                 {
                     return Ok(company);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        public IActionResult SearchStocksofCompany(Company company)
+        {
+            try
+            {
+                IEnumerable<StockPrice> stockPrices = service.SearchStocksofCompany(company);
+                if (stockPrices == null)
+                {
+                    return Content("Invalid Company");
+                }
+                else
+                {
+                    return Ok(stockPrices);
                 }
             }
             catch (Exception ex)
