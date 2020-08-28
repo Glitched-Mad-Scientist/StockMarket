@@ -21,7 +21,7 @@ namespace StockMarket.AdminAPI.Controllers
         {
             this.service = service;
         }
-        [HttpGet]
+        [HttpPost]
         [Route("Validate/{cname}")]
         public IActionResult Validate(string cname)
         {

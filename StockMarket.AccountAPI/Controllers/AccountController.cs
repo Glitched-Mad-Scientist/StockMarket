@@ -152,7 +152,9 @@ namespace StockMarket.AccountAPI.Controllers
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = expires,
-                SigningCredentials = credentials
+                SigningCredentials = credentials,
+                Issuer = configuration["Jwt:Issuer"],
+                Audience = configuration["Jwt:Issuer"]
             };
 
             var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);

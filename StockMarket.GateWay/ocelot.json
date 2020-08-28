@@ -1,17 +1,6 @@
 {
 	"Routes": [
 		{
-			"DownstreamPathTemplate": "/api/Account",
-			"DownstreamScheme": "http",
-			"DownstreamHostAndPorts": [
-				{
-					"Host": "localhost",
-					"Port": 5001
-				}
-			],
-			"UpstreamPathTemplate": "/Account/"
-		},
-		{
 			"DownstreamPathTemplate": "/api/Account/{url}",
 			"DownstreamScheme": "http",
 			"DownstreamHostAndPorts": [
@@ -20,7 +9,7 @@
 					"Port": 5001
 				}
 			],
-			"UpstreamPathTemplate": "/Account/{url}"
+			"UpstreamPathTemplate": "/api/Account/{url}"
 		},
 		{
 			"DownstreamPathTemplate": "/api/Admin/{url}",
@@ -31,19 +20,7 @@
 					"Port": 5002
 				}
 			],
-			"UpstreamPathTemplate": "/Admin/{url}"
-		},
-
-		{
-			"DownstreamPathTemplate": "/api/Admin",
-			"DownstreamScheme": "http",
-			"DownstreamHostAndPorts": [
-				{
-					"Host": "localhost",
-					"Port": 5002
-				}
-			],
-			"UpstreamPathTemplate": "/Admin/"
+			"UpstreamPathTemplate": "/api/Admin/{url}"
 		},
 		{
 			"DownstreamPathTemplate": "/api/Excel/{url}",
@@ -54,19 +31,7 @@
 					"Port": 5003
 				}
 			],
-			"UpstreamPathTemplate": "/Excel/{url}"
-		},
-
-		{
-			"DownstreamPathTemplate": "/api/Excel",
-			"DownstreamScheme": "http",
-			"DownstreamHostAndPorts": [
-				{
-					"Host": "localhost",
-					"Port": 5003
-				}
-			],
-			"UpstreamPathTemplate": "/Excel/"
+			"UpstreamPathTemplate": "/api/Excel/{url}"
 		},
 		{
 			"DownstreamPathTemplate": "/api/User/{url}",
@@ -77,19 +42,7 @@
 					"Port": 5004
 				}
 			],
-			"UpstreamPathTemplate": "/User/{url}"
-		},
-
-		{
-			"DownstreamPathTemplate": "/api/User",
-			"DownstreamScheme": "http",
-			"DownstreamHostAndPorts": [
-				{
-					"Host": "localhost",
-					"Port": 5004
-				}
-			],
-			"UpstreamPathTemplate": "/User/"
+			"UpstreamPathTemplate": "/api/User/{url}"
 		}
 	],
 	"GlobalConfiguration": {

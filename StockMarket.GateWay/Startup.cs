@@ -42,11 +42,9 @@ namespace StockMarket.GateWay
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
             app.UseOcelot();
+
+            app.UseEndpoints(endpoints => { });
         }
     }
 }

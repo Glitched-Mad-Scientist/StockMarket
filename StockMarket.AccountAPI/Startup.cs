@@ -43,8 +43,8 @@ namespace StockMarket.AccountAPI
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
-                        ValidateAudience = false,
-                        ValidateIssuer = false
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"]
                     };
                 });
         }
