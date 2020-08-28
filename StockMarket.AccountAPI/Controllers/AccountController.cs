@@ -4,12 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using StockMarket.AccountAPI.DTOs;
 using StockMarket.AccountAPI.Models;
 using StockMarket.AccountAPI.Services;
 
@@ -28,25 +30,25 @@ namespace StockMarket.AccountAPI.Controllers
             this.service = service;
             this.configuration = configuration;
         }
-        [HttpGet]
-        [Route("Validate/{uname}/{pwd}")]
+        [HttpPost]
+        [Route("Validate")]
         [AllowAnonymous]
-        public IActionResult Validate(string uname,string pwd)
+        public IActionResult Validate(LoginUserDTO loginUser)
         {
             try
             {
-                if(uname == "Admin" && pwd == "12345")
-                    return Ok(GenerateJwtToken(uname, "Admin"));
-                User user = service.Validate(uname, pwd);
+                if(loginUser.Username == "Admin" && loginUser.Password == "12345")
+                    return Ok(GenerateJwtToken(loginUser.Username, "Admin"));
+                User user = service.Validate(loginUser.Username, loginUser.Password);
                 if(user==null)
                 {
-                    return Content("Invalid User");
+                    return BadRequest("Invalid User");
                 }
                 if(user.Confirmed == "No")
                 {
-                    return Content("Email has not been confirmed yet.");
+                    return BadRequest("Email has not been confirmed yet.");
                 }
-                return Ok(GenerateJwtToken(uname,"User"));
+                return Ok(GenerateJwtToken(loginUser.Username,"User"));
             }
             catch (Exception ex)
             {
@@ -66,7 +68,7 @@ namespace StockMarket.AccountAPI.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
         [HttpPut]
@@ -144,15 +146,16 @@ namespace StockMarket.AccountAPI.Controllers
                 new Claim(ClaimTypes.Role,role)
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(configuration["JwtExpireDays"]));
-            var token = new JwtSecurityToken(
-                issuer: configuration["JWT:ValidIssuer"],
-                audience: configuration["JWT:ValidAudience"],
-                claims,
-                expires: expires,
-                signingCredentials: credentials
-            );
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(configuration["Jwt:ExpireDays"]));
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = expires,
+                SigningCredentials = credentials
+            };
+
+            var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
 

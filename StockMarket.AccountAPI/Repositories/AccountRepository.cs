@@ -12,7 +12,6 @@ namespace StockMarket.AccountAPI.Repositories
     public class AccountRepository : IAccountRepository
     {
         private StockDBContext context;
-        private encryption enc = new encryption();
         public AccountRepository(StockDBContext context)
         {
             this.context = context;
@@ -26,7 +25,7 @@ namespace StockMarket.AccountAPI.Repositories
         {
             User user = new User();
             user.Username = uname;
-            string hashed = enc.Encrypt(password);
+            string hashed = encryption.Encrypt(password,uname);
             user.Password = hashed;
             user.Email = email;
             user.Mobile = mobile;
@@ -40,7 +39,7 @@ namespace StockMarket.AccountAPI.Repositories
             if(uname != null)
                 user.Username = uname;
             if (password != null)
-                user.Password = enc.Encrypt(password);
+                user.Password = encryption.Encrypt(password,uname);
             if (email != null)
             {
                 user.Email = email;
@@ -54,8 +53,10 @@ namespace StockMarket.AccountAPI.Repositories
 
         public User Validate(string uname, string pwd)
         {
-            User user = context.Users.SingleOrDefault(i => i.Username == uname && i.Password == enc.Encrypt(pwd));
-            return user;
+            User user = context.Users.SingleOrDefault(i => i.Username == uname);
+            if (encryption.Decrypt(user.Password, uname) == pwd)
+                return user;
+            return null;
         }
 
         public void ConfirmEmail(User user)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockMarket.AdminAPI.Models;
@@ -29,7 +30,7 @@ namespace StockMarket.AdminAPI.Controllers
                 Company company = service.ValidateName(cname);
                 if(company==null)
                 {
-                    return Content("Invalid User");
+                    return Content("Invalid Company");
                 }
                 else
                 {
@@ -58,11 +59,11 @@ namespace StockMarket.AdminAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateCompany")]
-        public IActionResult UpdateCompany(Company company, Company update)
+        public IActionResult UpdateCompany(Company update)
         {
             try
             {
-                service.UpdateCompany(company.CompanyCode, update.Sector, update.CompanyName, update.Turnover, update.CEO, update.BoardofDirectors, update.StockExchanges, update.StockCodes, update.Description);
+                service.UpdateCompany(update.CompanyCode, update.Sector, update.CompanyName, update.Turnover, update.CEO, update.BoardofDirectors, update.StockExchanges, update.StockCodes, update.Description);
                 return Ok();
             }
             catch (Exception ex)
