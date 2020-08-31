@@ -28,6 +28,13 @@ namespace StockMarket.GateWay
         {
             services.AddControllers();
             services.AddOcelot(Configuration);
+            services.AddCors(C => {
+                C.AddPolicy("AllowOrigin", options =>
+                    options.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +46,8 @@ namespace StockMarket.GateWay
             }
 
             app.UseRouting();
+
+            app.UseCors("AllowOrigin");
 
             app.UseAuthorization();
 

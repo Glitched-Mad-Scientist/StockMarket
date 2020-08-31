@@ -30,6 +30,8 @@ namespace StockMarket.AdminAPI.Models
         public string Sector { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
         public IEnumerable<StockPrice> StockPrices { get; set; } //Navigation Prop
         public IEnumerable<IPO> IPOs { get; set; } //Navigation Prop
     }

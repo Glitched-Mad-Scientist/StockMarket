@@ -30,7 +30,6 @@ namespace StockMarket.AccountAPI
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddControllers();
-            services.AddCors();
 
             //JWT
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -56,8 +55,6 @@ namespace StockMarket.AccountAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors();
 
             app.UseRouting();
 

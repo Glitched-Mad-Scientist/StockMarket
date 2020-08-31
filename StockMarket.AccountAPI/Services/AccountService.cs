@@ -34,5 +34,13 @@ namespace StockMarket.AccountAPI.Services
         {
             accountRepository.ConfirmEmail(user);
         }
+        public bool isTaken(string username)
+        {
+            return accountRepository.isTaken(username);
+        }
+        public void ConfirmationEmail(string url, string Email)
+        {
+            accountRepository.ConfirmationEmail(url, Email);
+        }
     }
 }

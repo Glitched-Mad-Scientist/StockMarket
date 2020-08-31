@@ -15,6 +15,11 @@ namespace StockMarket.AdminAPI.Services
             adminRepository = repo;
         }
 
+        public List<Company> GetCompanies()
+        {
+            return adminRepository.GetAllCompanies();
+        }
+
         public void AddCompany(Company item)
         {
             adminRepository.AddCompany(item);
@@ -42,6 +47,34 @@ namespace StockMarket.AdminAPI.Services
         public Company ValidateCid(int cid)
         {
             return adminRepository.ValidateCid(cid);
+        }
+        public IPO AddIPO(IPO iPO)
+        {
+            return adminRepository.AddIPO(iPO);
+        }
+
+        public IPO UpdateIPO(IPO iPO)
+        {
+            return adminRepository.UpdateIPO(iPO);
+        }
+
+        public List<DateTime> GetMissingStockPriceDates(int companyCode, DateTime startDate, DateTime endDate)
+        {
+            List<DateTime> missingDates = new List<DateTime>();
+            for (DateTime date = startDate; date.Date <= endDate.Date; date = date.AddDays(1))
+            {
+                if (!adminRepository.isStockPrice(companyCode, date)) missingDates.Add(date);
+            }
+            return missingDates;
+        }
+        public Company ActivateCompany(int companyCode)
+        {
+            return adminRepository.ActivateCompany(companyCode);
+        }
+
+        public Company DeactivateCompany(int companyCode)
+        {
+            return adminRepository.DeactivateCompany(companyCode);
         }
     }
 }

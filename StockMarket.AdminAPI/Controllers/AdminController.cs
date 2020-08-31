@@ -13,7 +13,8 @@ namespace StockMarket.AdminAPI.Controllers
 
     [Route("api/Admin")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private IAdminService service;
@@ -22,7 +23,7 @@ namespace StockMarket.AdminAPI.Controllers
             this.service = service;
         }
         [HttpPost]
-        [Route("Validate/{cname}")]
+        [Route("Company/Validate/{cname}")]
         public IActionResult Validate(string cname)
         {
             try
@@ -43,7 +44,7 @@ namespace StockMarket.AdminAPI.Controllers
             }
         }
         [HttpPost]
-        [Route("AddCompany")]
+        [Route("Company/Add")]
         public IActionResult AddCompany(Company company)
         {
             try
@@ -58,7 +59,7 @@ namespace StockMarket.AdminAPI.Controllers
             }
         }
         [HttpPut]
-        [Route("UpdateCompany")]
+        [Route("Company/Update")]
         public IActionResult UpdateCompany(Company update)
         {
             try
@@ -72,14 +73,100 @@ namespace StockMarket.AdminAPI.Controllers
             }
         }
         [HttpDelete]
-        [Route("DeleteCompany")]
-        public IActionResult DeactivateCompany(Company company)
+        [Route("Company/Delete/{companyCode}")]
+        public IActionResult DeleteCompany(int companyCode)
         {
             try
             {
-                Company item = service.ValidateCid(company.CompanyCode);
+                Company item = service.ValidateCid(companyCode);
                 service.DeleteCompany(item);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("Company/All")]
+        public IActionResult GetAllCompanies()
+        {
+            try
+            {
+                List<Company> companies = service.GetCompanies();
+                if (companies.Any())
+                    return Ok(companies);
+                return NotFound("No companies in record.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("IPO/Add")]
+        public IActionResult AddIPO(IPO iPODetails)
+        {
+            try
+            {
+                return Ok(service.AddIPO(iPODetails));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("IPO/Update")]
+        public IActionResult UpdateIPO(IPO iPODetails)
+        {
+            try
+            {
+                return Ok(service.UpdateIPO(iPODetails));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("StockPrices/Missing/{companyCode}/{startDate}/{endDate}")]
+        public IActionResult GetMissingStockPriceDates(int companyCode, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                List<DateTime> missingDates = service.GetMissingStockPriceDates(companyCode, startDate, endDate);
+                if (missingDates.Any()) return Ok(missingDates);
+                return NotFound($"no missing dates found between {startDate} and {endDate}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("Company/Activate/{companyCode}")]
+        public IActionResult ActivateCompany(int companyCode)
+        {
+            try
+            {
+                return Ok(service.ActivateCompany(companyCode));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Company/Deactivate/{companyCode}")]
+        public IActionResult DeactivateCompany(int companyCode)
+        {
+            try
+            {
+                return Ok(service.DeactivateCompany(companyCode));
             }
             catch (Exception ex)
             {

@@ -20,7 +20,8 @@ namespace StockMarket.AccountAPI.Migrations
                     StockExchanges = table.Column<string>(maxLength: 30, nullable: true),
                     StockCodes = table.Column<string>(maxLength: 30, nullable: true),
                     Sector = table.Column<string>(maxLength: 30, nullable: false),
-                    Description = table.Column<string>(maxLength: 1000, nullable: true)
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,7 +35,8 @@ namespace StockMarket.AccountAPI.Migrations
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(maxLength: 30, nullable: false),
-                    Password = table.Column<string>(maxLength: 30, nullable: false),
+                    Role = table.Column<string>(maxLength: 30, nullable: false),
+                    Password = table.Column<string>(maxLength: 1000, nullable: false),
                     Email = table.Column<string>(maxLength: 30, nullable: true),
                     Mobile = table.Column<string>(maxLength: 30, nullable: true),
                     Confirmed = table.Column<string>(maxLength: 30, nullable: true)

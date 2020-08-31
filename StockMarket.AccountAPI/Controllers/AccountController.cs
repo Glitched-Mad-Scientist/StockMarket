@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Mail;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,8 +34,6 @@ namespace StockMarket.AccountAPI.Controllers
         {
             try
             {
-                if(loginUser.Username == "Admin" && loginUser.Password == "12345")
-                    return Ok(GenerateJwtToken(loginUser.Username, "Admin"));
                 User user = service.Validate(loginUser.Username, loginUser.Password);
                 if(user==null)
                 {
@@ -48,7 +43,7 @@ namespace StockMarket.AccountAPI.Controllers
                 {
                     return BadRequest("Email has not been confirmed yet.");
                 }
-                return Ok(GenerateJwtToken(loginUser.Username,"User"));
+                return Ok(new { token = GenerateJwtToken(loginUser.Username, user.Role) });
             }
             catch (Exception ex)
             {
@@ -58,13 +53,13 @@ namespace StockMarket.AccountAPI.Controllers
         [HttpPost]
         [Route("AddUser")]
         [AllowAnonymous]
-        public IActionResult AddUser(User user)
+        public IActionResult AddUser(RegisterUserDTO registerUserDTO)
         {
             try
             {
-                User item = service.CreateUser(user.Username,user.Password,user.Email,user.Mobile);
+                User item = service.CreateUser(registerUserDTO.Username,registerUserDTO.Password,registerUserDTO.Email,registerUserDTO.Mobile);
                 service.AddUser(item);
-                return Ok(user);
+                return Ok(registerUserDTO);
             }
             catch(Exception ex)
             {
@@ -79,8 +74,14 @@ namespace StockMarket.AccountAPI.Controllers
             {
                 service.UpdateUser(update.UserId, update.Username, update.Password, update.Email, update.Mobile);
                 if (update.Email != null)
-                    service.ConfirmEmail(update);
-                return Ok();
+                {
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", update, protocol: HttpContext.Request.Scheme);
+                    String url = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
+
+                    service.ConfirmationEmail(url, update.Email);
+                    return Ok("Profile Updated & Confirmation email sent.");
+                }
+                return Ok("Profile Updated.");
             }
             catch (Exception ex)
             {
@@ -96,23 +97,7 @@ namespace StockMarket.AccountAPI.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", user, protocol: HttpContext.Request.Scheme);
                 String url = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
 
-                MailMessage msg = new MailMessage();
-                msg.From = new MailAddress("teertharajchatterjee@gmail.com");
-                msg.To.Add(user.Email);
-                msg.Subject = "This is your confirmation email";
-                msg.Body = url;
-                msg.IsBodyHtml = true;
-
-                SmtpClient smt = new SmtpClient();
-                smt.Host = "smtp.gmail.com";
-                System.Net.NetworkCredential ntwd = new NetworkCredential();
-                ntwd.UserName = "teertharajchatterjee@gmail.com";
-                ntwd.Password = "";
-                smt.UseDefaultCredentials = true;
-                smt.Credentials = ntwd;
-                smt.Port = 587;
-                smt.EnableSsl = true;
-                smt.Send(msg);
+                service.ConfirmationEmail(url,user.Email);
                 return Ok("Confirmation email has been sent.");
             }
             catch (Exception ex)
@@ -161,6 +146,20 @@ namespace StockMarket.AccountAPI.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
 
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("isTaken/{username}")]
+        public IActionResult isTaken(string username)
+        {
+            try
+            {
+                return Ok(service.isTaken(username));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
     }

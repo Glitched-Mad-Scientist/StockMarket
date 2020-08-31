@@ -18,7 +18,11 @@ namespace StockMarket.ExcelAPI.Models
         public string Username { get; set; }
         [Required]
         [StringLength(30)]
+        public string Role { get; set; }
+        [Required]
+        [StringLength(1000)]
         public string Password { get; set; }
+        [EmailAddress]
         [StringLength(30)]
         public string Email { get; set; }
         [StringLength(30)]

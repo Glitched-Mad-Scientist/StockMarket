@@ -14,5 +14,11 @@ namespace StockMarket.AdminAPI.Repositories
         Company ValidateCid(int cid);
         public void DeleteCompany(Company item);
         public void UpdateCompany(int CId, string sector, string cname, long turnover, string ceo, string bod, string se, string sc, string desc);
+        public IPO AddIPO(IPO iPO);
+        public IPO UpdateIPO(IPO iPO);
+        public bool isStockPrice(int companyCode, DateTime date);
+        public Company ActivateCompany(int companyCode);
+        public Company DeactivateCompany(int companyCode);
+        public List<Company> GetAllCompanies();
     }
 }

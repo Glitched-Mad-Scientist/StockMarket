@@ -20,6 +20,10 @@ namespace StockMarket.AdminAPI.Repositories
             context.Add(item);
             context.SaveChanges();
         }
+        public List<Company> GetAllCompanies()
+        {
+            return context.Companies.ToList();
+        }
         public Company CreateCompany(string sector, string cname, long turnover=0,string ceo=null,string bod=null,string se=null,string sc= null, string desc = null)
         {
             Company company = new Company();
@@ -31,6 +35,7 @@ namespace StockMarket.AdminAPI.Repositories
             company.Turnover = turnover;
             company.Sector = sector;
             company.Description = desc;
+            company.IsActive = true;
             return company;
         }
 
@@ -72,6 +77,42 @@ namespace StockMarket.AdminAPI.Repositories
             Company company = context.Companies.SingleOrDefault(i => i.CompanyCode == cid);
             return company;
         }
+        public IPO AddIPO(IPO iPO)
+        {
+            context.IPOs.Add(iPO);
+            context.SaveChanges();
+            return iPO;
+        }
 
+        public IPO UpdateIPO(IPO iPO)
+        {
+            context.IPOs.Update(iPO);
+            context.SaveChanges();
+            return iPO;
+        }
+        public bool isStockPrice(int companyCode, DateTime date)
+        {
+            return context.StockPrices
+                .Where(sp =>
+                    sp.CompanyCode == companyCode &&
+                    sp.Date == date
+                ).Any();
+        }
+
+        public Company ActivateCompany(int companyCode)
+        {
+            Company company = context.Companies.Find(companyCode);
+            company.IsActive = true;
+            context.SaveChanges();
+            return company;
+        }
+
+        public Company DeactivateCompany(int companyCode)
+        {
+            Company company = context.Companies.Find(companyCode);
+            company.IsActive = false;
+            context.SaveChanges();
+            return company;
+        }
     }
 }

@@ -10,7 +10,7 @@ using StockMarket.AccountAPI.DBAccess;
 namespace StockMarket.AccountAPI.Migrations
 {
     [DbContext(typeof(StockDBContext))]
-    [Migration("20200824022529_initial")]
+    [Migration("20200829103246_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace StockMarket.AccountAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Sector")
                         .IsRequired()
@@ -157,6 +160,11 @@ namespace StockMarket.AccountAPI.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);

@@ -13,5 +13,7 @@ namespace StockMarket.AccountAPI.Repositories
         public User Validate(string uname, string pwd);
         public void UpdateUser(int UId, string uname, string password, string email, string mobile);
         public void ConfirmEmail(User user);
+        public bool isTaken(string username);
+        public void ConfirmationEmail(string url, string Email);
     }
 }

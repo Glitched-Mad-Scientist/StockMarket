@@ -43,6 +43,9 @@ namespace StockMarket.AccountAPI.Migrations
                         .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Sector")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
@@ -158,6 +161,11 @@ namespace StockMarket.AccountAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
 
                     b.Property<string>("Username")
                         .IsRequired()

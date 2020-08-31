@@ -1,20 +1,21 @@
 ﻿using StockMarket.AccountAPI.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using StockMarket.AccountAPI.DBAccess;
-using Microsoft.AspNetCore.Server.IIS.Core;
 using StockMarket.AccountAPI.Infastructure;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace StockMarket.AccountAPI.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
         private StockDBContext context;
-        public AccountRepository(StockDBContext context)
+        private readonly IConfiguration configuration;
+        public AccountRepository(StockDBContext context, IConfiguration configuration)
         {
             this.context = context;
+            this.configuration = configuration;
         }
         public void AddUser(User item)
         {
@@ -30,6 +31,7 @@ namespace StockMarket.AccountAPI.Repositories
             user.Email = email;
             user.Mobile = mobile;
             user.Confirmed = "No";
+            user.Role = "User";
             return user;
         }
 
@@ -59,11 +61,34 @@ namespace StockMarket.AccountAPI.Repositories
             return null;
         }
 
+        public bool isTaken(string username)
+        {
+            return context.Users.Where(U => U.Username == username).Any();
+        }
+
         public void ConfirmEmail(User user)
         {
             user.Confirmed = "Yes";
             context.Update(user);
             context.SaveChanges();
+        }
+
+        public void ConfirmationEmail(string url,string Email)
+        {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(configuration["MailCredentials:Email"]);
+            mailMessage.To.Add(Email);
+            mailMessage.Subject = "This is your confirmation email";
+            mailMessage.Body = url;
+            mailMessage.IsBodyHtml = true;
+
+            NetworkCredential networkCredential = new NetworkCredential(configuration["MailCredentials:Email"], configuration["MailCredentials:Password"]);
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.UseDefaultCredentials = true;
+            smtpClient.Credentials = networkCredential;
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(mailMessage);
         }
     }
 }
