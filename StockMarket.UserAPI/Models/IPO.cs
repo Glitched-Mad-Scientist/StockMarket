@@ -26,7 +26,7 @@ namespace StockMarket.UserAPI.Models
         [Column(TypeName = "Date")]
         public DateTime OpenDate { get; set; }
         [Required]
-        public int PricePerShare { get; set; }
+        public double PricePerShare { get; set; }
         [Required]
         public int TotalNumberOfShares { get; set; }
         [StringLength(150)]

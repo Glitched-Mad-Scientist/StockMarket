@@ -20,5 +20,6 @@ namespace StockMarket.AdminAPI.Repositories
         public Company ActivateCompany(int companyCode);
         public Company DeactivateCompany(int companyCode);
         public List<Company> GetAllCompanies();
+        public List<IPO> GetIPOs();
     }
 }

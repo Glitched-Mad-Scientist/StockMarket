@@ -103,6 +103,22 @@ namespace StockMarket.AdminAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        [Route("IPO/All")]
+        public IActionResult GetAllIPOs()
+        {
+            try
+            {
+                List<IPO> iPOs = service.GetIPOs();
+                if (iPOs.Any())
+                    return Ok(iPOs);
+                return NotFound("No IPOs in record.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
         [HttpPost]
         [Route("IPO/Add")]
         public IActionResult AddIPO(IPO iPODetails)

@@ -43,7 +43,7 @@ namespace StockMarket.AccountAPI.Controllers
                 {
                     return BadRequest("Email has not been confirmed yet.");
                 }
-                return Ok(new { token = GenerateJwtToken(loginUser.Username, user.Role) });
+                return Ok(new { token = GenerateJwtToken(user) });
             }
             catch (Exception ex)
             {
@@ -72,20 +72,24 @@ namespace StockMarket.AccountAPI.Controllers
         {
             try
             {
-                service.UpdateUser(update.UserId, update.Username, update.Password, update.Email, update.Mobile);
-                if (update.Email != null)
+                if (update.Password == "0")
+                    service.UpdateUser(update.UserId, update.Username, null, update.Email, update.Mobile);
+                else
+                    service.UpdateUser(update.UserId, update.Username, update.Password, update.Email, update.Mobile);
+
+                /*if (update.Email != null)
                 {
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", update, protocol: HttpContext.Request.Scheme);
                     String url = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
 
                     service.ConfirmationEmail(url, update.Email);
                     return Ok("Profile Updated & Confirmation email sent.");
-                }
-                return Ok("Profile Updated.");
+                }*/
+                return Ok(update);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex);
             }
         }
         [HttpGet]
@@ -121,14 +125,17 @@ namespace StockMarket.AccountAPI.Controllers
             }
         }
 
-        private string GenerateJwtToken(string uname, string role)
+        private string GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, uname),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, uname),
-                new Claim(ClaimTypes.Role,role)
+                new Claim(ClaimTypes.NameIdentifier, user.Username),
+                new Claim("Id", user.UserId.ToString()),
+                new Claim(ClaimTypes.Role,user.Role),
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim("mobilephone",user.Mobile)
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);

@@ -58,7 +58,8 @@ namespace StockMarket.AdminAPI.Repositories
                 company.Sector = sector;
             if (desc != null)
                 company.Description = desc;
-            context.Update(company);
+            context.Companies.Update(company);
+            context.SaveChanges();
         }
 
         public void DeleteCompany(Company item)
@@ -76,6 +77,11 @@ namespace StockMarket.AdminAPI.Repositories
         {
             Company company = context.Companies.SingleOrDefault(i => i.CompanyCode == cid);
             return company;
+        }
+
+        public List<IPO> GetIPOs()
+        {
+            return context.IPOs.ToList();
         }
         public IPO AddIPO(IPO iPO)
         {

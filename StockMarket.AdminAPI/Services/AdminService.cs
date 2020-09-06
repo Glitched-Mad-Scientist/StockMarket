@@ -76,5 +76,10 @@ namespace StockMarket.AdminAPI.Services
         {
             return adminRepository.DeactivateCompany(companyCode);
         }
+
+        public List<IPO> GetIPOs()
+        {
+            return adminRepository.GetIPOs();
+        }
     }
 }

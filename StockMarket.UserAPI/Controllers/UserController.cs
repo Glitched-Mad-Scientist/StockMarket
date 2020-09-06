@@ -41,6 +41,8 @@ namespace StockMarket.UserAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPost]
+        [Route("SearchStocksofCompany")]
         public IActionResult SearchStocksofCompany(Company company)
         {
             try
@@ -49,6 +51,27 @@ namespace StockMarket.UserAPI.Controllers
                 if (stockPrices == null)
                 {
                     return Content("Invalid Company");
+                }
+                else
+                {
+                    return Ok(stockPrices);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("ComparePricesOfCompanies")]
+        public IActionResult ComparePricesOfCompanies(DateTime dateTime)
+        {
+            try
+            {
+                IEnumerable<StockPrice> stockPrices = service.ComparePricesOfCompanies(dateTime);
+                if (stockPrices == null)
+                {
+                    return Content("Invalid Date");
                 }
                 else
                 {
