@@ -24,9 +24,10 @@ namespace StockMarket.ExcelAPI.Controllers {
         public IActionResult UploadExcel() {
             try {
                 var postedFile = Request.Form.Files["ExcelFile"];
+                string FileName = Request.Form["ExcelFileName"][0];
                 string worksheet = Request.Form["Worksheet"][0];
 
-                string filePath = Path.Combine("ExcelFiles\\Uploads", postedFile.FileName);
+                string filePath = Path.Combine("ExcelFiles\\Uploads", FileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                     postedFile.CopyTo(fileStream);
 
