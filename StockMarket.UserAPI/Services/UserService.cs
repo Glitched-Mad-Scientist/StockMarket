@@ -14,15 +14,39 @@ namespace StockMarket.UserAPI.Services
             userRepository = repo;    
         }
 
-        public Company SearchCompany(string name) => userRepository.SearchCompany(name);
-
-        public IEnumerable<StockPrice> SearchStocksofCompany(Company company)
+        public Company GetCompanyByCompanyCode(int compantCode)
         {
-            return userRepository.SearchStocksofCompany(company);
+            return userRepository.GetCompanyById(compantCode);
         }
-        public IEnumerable<StockPrice> ComparePricesOfCompanies(DateTime dateTime)
+
+        public List<Company> GetCompanies()
         {
-            return userRepository.ComparePricesOfCompanies(dateTime);
+            return userRepository.GetAllCompanies();
+        }
+
+        public List<Company> GetCompanies(string query)
+        {
+            return userRepository.SearchCompanies(query);
+        }
+
+        public List<StockPrice> GetCompanyDetails(
+            int companyCode,
+            DateTime startDate,
+            DateTime endDate
+        )
+        {
+            List<StockPrice> stockPrices = userRepository.GetStockPrices(
+                companyCode,
+                startDate,
+                endDate
+            );
+
+            return stockPrices;
+        }
+
+        public bool IsActive(int companyCode)
+        {
+            return userRepository.IsActive(companyCode);
         }
     }
 }

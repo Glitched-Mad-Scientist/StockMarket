@@ -16,17 +16,53 @@ namespace StockMarket.UserAPI.Repositories
         {
             this.context = context;
         }
-        public Company SearchCompany(string name)
+        public List<Company> GetAllCompanies()
         {
-            return context.Companies.SingleOrDefault(i => i.CompanyName == name|| i.CompanyCode == int.Parse(name));
+            return context.Companies
+                .Where(c => c.IsActive == true)
+                .ToList();
         }
-        public IEnumerable<StockPrice> SearchStocksofCompany(Company company)
+        public Company GetCompanyById(int id)
         {
-            return company.StockPrices.ToList();
+            return context.Companies
+                .Where(c => c.CompanyCode == id && c.IsActive == true)
+                .FirstOrDefault();
         }
-        public IEnumerable<StockPrice> ComparePricesOfCompanies(DateTime dateTime)
+
+        public List<StockPrice> GetStockPrices(int companyCode, DateTime startDate, DateTime endDate)
         {
-            return context.StockPrices.Where(x => x.Date.Equals(dateTime)).ToList();
+            return context.StockPrices
+                .Where(sp =>
+                    sp.CompanyCode == companyCode &&
+                    sp.Date >= startDate &&
+                    sp.Date <= endDate
+                ).OrderBy(sp => sp.Date).ToList();
         }
+
+        public List<Company> SearchCompanies(string query)
+        {
+            List<Company> companies = context.Companies.Where(c =>
+                c.IsActive == true && (
+                c.CompanyCode.ToString().ToLower().StartsWith(query.ToLower()) ||
+                c.CompanyName.ToLower().StartsWith(query.ToLower())
+            )).ToList();
+
+            if (companies.Any()) return companies;
+
+            return context.Companies.Where(c =>
+                c.IsActive == true && (
+                c.CompanyCode.ToString().ToLower().Contains(query.ToLower()) ||
+                c.CompanyName.ToLower().Contains(query.ToLower())
+            )).ToList();
+        }
+        public bool IsActive(int companyCode)
+        {
+            return context.Companies
+                .Where(c =>
+                    c.CompanyCode == companyCode &&
+                    c.IsActive == true
+                ).Any();
+        }
+
     }
 }

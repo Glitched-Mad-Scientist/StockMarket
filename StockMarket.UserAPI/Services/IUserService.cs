@@ -8,8 +8,10 @@ namespace StockMarket.UserAPI.Services
 {
    public interface IUserService
     {
-        public Company SearchCompany(string name);
-        public IEnumerable<StockPrice> SearchStocksofCompany(Company company);
-        public IEnumerable<StockPrice> ComparePricesOfCompanies(DateTime dateTime);
+        public Company GetCompanyByCompanyCode(int id);
+        public List<Company> GetCompanies();
+        public List<Company> GetCompanies(string query);
+        public List<StockPrice> GetCompanyDetails(int companyCode, DateTime start, DateTime end);
+        public bool IsActive(int companyCode);
     }
 }

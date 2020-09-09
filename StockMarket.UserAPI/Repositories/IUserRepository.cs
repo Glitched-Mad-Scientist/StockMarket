@@ -8,8 +8,10 @@ namespace StockMarket.UserAPI.Repositories
 {
     public interface IUserRepository
     {
-        public Company SearchCompany(string name);
-        public IEnumerable<StockPrice> SearchStocksofCompany(Company company);
-        public IEnumerable<StockPrice> ComparePricesOfCompanies(DateTime dateTime);
+        public List<Company> GetAllCompanies();
+        public Company GetCompanyById(int id);
+        public List<Company> SearchCompanies(string query);
+        public List<StockPrice> GetStockPrices(int companyCode, DateTime start, DateTime end);
+        public bool IsActive(int companyCode);
     }
 }
